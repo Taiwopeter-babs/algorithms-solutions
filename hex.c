@@ -6,7 +6,7 @@
  * @str: string parameter to be reversed
  * Return: number of characters printed
  */
-int rev(char *str)
+char *rev(char *str)
 {
 	int i, j, len, count = 0;
 	char *ptr;
@@ -28,25 +28,54 @@ int rev(char *str)
 		ptr[i] = tmp;
 	}
 
-	for (count = 0; ptr[count]; count++)
-		putchar(ptr[count]);
+	/*for (count = 0; ptr[count]; count++)
+		putchar(ptr[count]);*/
 
-	putchar('\n');
-	free (ptr);
-
-	return (count);
+	return (ptr);
 	
+}
+
+int hex(int num)
+{
+	int i, idx, len = 0;
+	char hex[] = "0123456789abcdef";
+	char s[100];
+	char *b;
+
+	i = 0;
+	while (num > 0)
+	{
+		 
+		if (num % 16 > 9)
+		{
+			idx = (num % 16);
+			s[i] = hex[idx];
+			num /= 16;
+			i++;
+		}
+		else
+		{
+			s[i] = (num % 16) + '0';
+			num /= 16;
+			i++;
+		}
+	}
+	b = rev(s);
+
+	b[i] = '\0';
+
+	for (i = 0; b[i]; i++)
+		putchar(b[i]);
+	putchar('\n');
+	return (i);
 }
 
 int main(void)
 {
-	char str[] = "Why did the chicken cross the road? Applying ROT13 to a piece of text.";
 	int len;
 
-	len = rev(str);
-
+	len = hex(9874);
 	printf("%d\n", len);
-	printf("%X\n", 10);
-	
+
 	return (0);
 }
