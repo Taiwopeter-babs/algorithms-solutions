@@ -74,7 +74,7 @@ int main(void)
 {
 	int len;
 
-	len = hex(9874);
+	len = hex(89255);
 	printf("%d\n", len);
 
 	return (0);
