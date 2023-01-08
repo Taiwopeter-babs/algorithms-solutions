@@ -1,25 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#define _GNU_SOURCE
+
 /**
  * collatz - tries the collatz conjecture in finite steps
  * @n: positive integer
  * @steps: finite value for sequence
  * Return: 1 if conjecture proven, else 0
  */
-int collatz(unsigned long int n, unsigned long int steps)
+int collatz(int n, int steps)
 {
-	unsigned long int count = 0;
+	int count = 0;
 	char *separation = "";
 	
 	if (n < 0)
-		n = n * -1;
+	{
+		printf("Value cannot be negative.\n");
+		return (0);
+	}
 
 	if (n == 0)
 		n = n % 2;
 	if (n == 1)
 		n = (3 * n) + 1;
 	
-	printf("Value => [%lu]\n", n);
+	printf("Value => [%d]\n", n);
 
 	putchar('{');
 	printf("%s", separation);
@@ -28,10 +34,10 @@ int collatz(unsigned long int n, unsigned long int steps)
 	{
 		if (count == steps - 1 || n == 1)
 		{
-			printf("%s%lu", separation, n);
+			printf("%s%d", separation, n);
 			putchar('}');
 			printf("\n");
-			printf("Number of steps taken => %lu\n", count);
+			printf("Number of steps taken => %d\n", count);
 			if (count == steps - 1)
 				return (0);
 			if (n == 1)
@@ -39,7 +45,7 @@ int collatz(unsigned long int n, unsigned long int steps)
 		}
 		count++;
 
-		printf("%s%lu", separation, n);
+		printf("%s%d", separation, n);
 		separation = ", ";
 
 		if (n % 2 == 0)
@@ -55,27 +61,33 @@ int collatz(unsigned long int n, unsigned long int steps)
 	}
 	putchar('}');
 	printf("\n");
-	printf("Number of steps taken => %lu\n", count);
+	printf("Number of steps taken => %d\n", count);
 	return (1);
 }
 
-int main(__attribute((unused)) int argc, char **argv)
+int main(int argc, char **argv)
 {
-	unsigned long int steps = 500;
+	int steps = 500;
 	int return_val;
 	int val;
 
-	val = atoi(argv[1]);
+	if (argc != 2)
+	{
+		dprintf(STDERR_FILENO, "Usage: ./col value\n");
+	}
 
-	return_val = collatz((unsigned long int) val, steps);
+	val = atoi(argv[1]);
+	printf("val = %d\n", val);
+
+	return_val = collatz(val, steps);
 	
 	if (return_val)
 		printf("Return value of => [%d] confirms collatz sequence"
-				" in [%lu] steps\n",
+				" in [%d] steps\n",
 				return_val, steps);
 	else
 		printf("Return value of => [%d] does not agree with collatz"
-				"sequence in [%lu] steps\n",
+				" sequence in [%d] steps\n",
 				return_val, steps);
 
 	return (0);
