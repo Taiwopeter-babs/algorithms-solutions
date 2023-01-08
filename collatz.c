@@ -32,16 +32,15 @@ int collatz(int n, int steps)
 
 	while (n)
 	{
-		if (count == steps - 1 || n == 1)
+		if (count == steps - 1)
+			break;
+		if (n == 1)
 		{
 			printf("%s%d", separation, n);
 			putchar('}');
 			printf("\n");
 			printf("Number of steps taken => %d\n", count);
-			if (count == steps - 1)
-				return (0);
-			if (n == 1)
-				return (1);
+			return (1);
 		}
 		count++;
 
@@ -62,7 +61,7 @@ int collatz(int n, int steps)
 	putchar('}');
 	printf("\n");
 	printf("Number of steps taken => %d\n", count);
-	return (1);
+	return (0);
 }
 
 int main(int argc, char **argv)
