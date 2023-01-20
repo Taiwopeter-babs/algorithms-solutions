@@ -32,40 +32,33 @@ int partition_array(int *arr, int lb, int ub)
 	int start, end, pivot;
 
 	start = lb;
-	end = ub;
-	pivot = arr[lb];
+	end = lb;
+	pivot = arr[ub];
 
 	if (arr == NULL)
 		return (1);
 
-	while (start < end)
+	while (end < ub)
 	{
-		/* stops if element is > pivot; element is arr[start] */
-		while (arr[start] <= pivot)
-			start++;
-
-		/* stops if element is < pivot; element is arr[end] */
-		while (arr[end] > pivot)
-			end--;
-
-		/**
-		 * move element > pivot to the R.H.S,
-		 * and the element < pivot to the L.H.S
-		 */
-		if (start < end)
+		/* if element is <= pivot; swap occurs */
+		if (arr[end] <= pivot)
+		{
 			swap_elements(&arr[start], &arr[end]);
+			/* increment the pointer on the element > pivot */
+			start++;
+		}
+		/* increment the pointer on the element <= pivot */
+		end++;
 	}
 
 	/**
-	 * arr[end] is < arr[lb], since arr[lb] is the pivot element;
-	 * end stops when a certain point is reached
-	 * in the loop when an element lower than pivot is reached
+	 * arr[start] is > arr[ub], since start is on the element > pivot
 	 * hence, moves the pivot element to the 'center' of the partitioned
 	 * array [ elements < pivot | pivot | elements > pivot ]
 	 */
-	swap_elements(&arr[lb], &arr[end]);
+	swap_elements(&arr[start], &arr[ub]);
 
-	return (end);
+	return (start);
 }
 /**
  * quick_sort - recursive function repeating partitioning and sorting
@@ -99,13 +92,14 @@ void quick_sort(int *arr, int lb, int ub)
 int main(void)
 {
 	int i, size;
-	int arr[] = {7, 6, 10, 5, 9, 2, 1, 15, 7};
+	int arr[] = {1, 3, 6, 8, 9, 12, 4};
 	int arr2[] = {0};
 
 	size = sizeof(arr) / sizeof(int);
 
 	printf("===== Before sorting ======\n");
-
+	
+	printf("size => %d\n", size); 
 	for (i = 0; i < size; i++)
 		printf("%d ", arr[i]);
 	printf("\n\n");
