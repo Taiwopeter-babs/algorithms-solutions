@@ -21,7 +21,8 @@ void swap_elements(int *a, int *b)
 
 /**
  * partition_array - separats the array elements, based on the pivot
- * element
+ * element. It uses the Lomuto partition - last element in the array
+ * is picked as pivot.
  * @arr: array or subarray, as the case may be, to be partitioned
  * @lb: index of lower bound of array or subarray
  * @ub: index of upper bound of array or subarray
